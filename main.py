@@ -5,7 +5,9 @@ client = TelegramClient('hp_ubuntu', api_id, api_hash)
 
 @client.on(events.NewMessage(chats=('fuufudkye'))) # air_alert_ua
 async def normal_handler(event):
-    print(event.message.to_dict()['message'])
+    message = event.message.to_dict()['message']
+    if '#м_Миколаїв_та_Миколаївська_територіальна_громада' in message and '🔴' in message:
+        print('Тривога!')
 
 client.start()
 client.run_until_disconnected()
