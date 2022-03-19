@@ -9,7 +9,7 @@ bot = telebot.TeleBot(TOKEN)
 async def normal_handler(event):
     message = event.message.to_dict()['message']
     if '#м_Миколаїв_та_Миколаївська_територіальна_громада' in message and '🔴' in message:
-        bot.send_message(-686742350, "Тривога!")
+        bot.send_photo(-686742350, open('img.jpg', 'rb'))
 
 client.start()
 client.run_until_disconnected()
