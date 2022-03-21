@@ -8,7 +8,7 @@ bot = telebot.TeleBot(TOKEN)
 @client.on(events.NewMessage(chats=('air_alert_ua')))
 async def normal_handler(event):
     message = event.message.to_dict()['message']
-    if '#м_Миколаїв_та_Миколаївська_територіальна_громада' or '#Миколаївська_область' in message and '🔴' in message:
+    if ('#м_Миколаїв_та_Миколаївська_територіальна_громада' or '#Миколаївська_область') in message and '🔴' in message:
         bot.send_photo(group_id, open('img.jpg', 'rb'))
 
 client.start()
