@@ -8,6 +8,6 @@
 api_hash = 'ababababab'
 TOKEN = '11111111:abaBAbabab'
 </code></pre>
-<code>api_id</code> та <code>api_hash</code> отримайте створивши Telegram Application, детальніше <a href="https://core.telegram.org/api/obtaining_api_id" target="_blank">тут</a><br>
-<code>TOKEN</code> отримайте створивши Telegram-бота, детальніше <a href="https://core.telegram.org/bots" target="_blank">тут</a>
-<li>4) запустити файл <code>main.py</code> та автентифікуватись через свій акаунт Telegram.</li>
+<code>api_id</code> та <code>api_hash</code> отримайте створивши Telegram Application, детальніше <a href="https://core.telegram.org/api/obtaining_api_id">тут</a><br>
+<code>TOKEN</code> отримайте створивши Telegram-бота, детальніше <a href="https://core.telegram.org/bots">тут</a>
+<ol start="4"><li>запустити файл <code>main.py</code> та автентифікуватись через свій акаунт Telegram.</li></ol>
