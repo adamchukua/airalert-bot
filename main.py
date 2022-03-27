@@ -14,7 +14,8 @@ bot = telebot.TeleBot(TOKEN)
 @client_bot.on(events.NewMessage(pattern='/start'))
 async def send_welcome(event):
     await event.respond('👋 Вітання!\n\n'
-                        'Тепер я сповіщатиму вас про повітряну тривогу, і про її відбій (наразі тільки для м. Миколаєва та Миколаївської області). Дані беруться з каналу @air_alert_ua.\n\n'
+                        'Тепер я сповіщатиму вас про повітряну тривогу, і про її відбій (наразі тільки для м. Миколаєва'
+                        ' та Миколаївської області). Дані беруться з каналу @air_alert_ua.\n\n'
                         'Слава Україні! 🇺🇦')
     group_id = str(event.chat_id)
     with open('subscribers.txt', 'r') as file_r:
@@ -28,26 +29,15 @@ async def send_welcome(event):
 async def alert_handler(event):
     message = event.message.to_dict()['message']
     if '#м_Миколаїв_та_Миколаївська_територіальна_громада' in message or '#Миколаївська_область' in message:
-        if '🔴' in message:
-            with open('subscribers.txt', 'r') as file:
-                for group_id in file:
-                    media = random.choice(os.listdir('media/alert_on/'))
-                    if media[-3:] == 'jpg':
-                        bot.send_photo(group_id, open('media/alert_on/' + media, 'rb'),
-                                       caption='‍Увага! Повітряна тривога!')
-                    else:
-                        bot.send_video(group_id, open('media/alert_on/' + media, 'rb'),
-                                       caption='‍Увага! Повітряна тривога!')
-        elif '🟢' in message:
-            with open('subscribers.txt', 'r') as file:
-                for group_id in file:
-                    media = random.choice(os.listdir('media/alert_off/'))
-                    if media[-3:] == 'jpg':
-                        bot.send_photo(group_id, open('media/alert_off/' + media, 'rb'),
-                                       caption='Увага! Відбій повітряної тривоги!')
-                    else:
-                        bot.send_video(group_id, open('media/alert_off/' + media, 'rb'),
-                                       caption='Увага! Відбій повітряної тривоги!')
+        with open('subscribers.txt', 'r') as file:
+            for group_id in file:
+                path = 'media/alert_on/' if '🔴' in message else 'media/alert_off/'
+                message = '‍Увага! Повітряна тривога!' if '🔴' in message else 'Увага! Відбій повітряної тривоги!'
+                media = random.choice(os.listdir(path))
+                if media[-3:] == 'jpg':
+                    bot.send_photo(group_id, open(path + media, 'rb'), caption=message)
+                else:
+                    bot.send_video(group_id, open(path + media, 'rb'), caption=message)
     else:
         print(f'{message[2:7]}: bot is working')
 
