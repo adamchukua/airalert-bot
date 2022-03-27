@@ -4,3 +4,4 @@ secret.py
 *.session-journal
 __pycache__/
 img.jpg
+subscribers.txt

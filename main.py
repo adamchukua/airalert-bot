@@ -4,10 +4,24 @@ import random
 import telebot
 from telethon import TelegramClient, events
 
-from secret import api_id, api_hash, TOKEN, group_id
+from secret import api_id, api_hash, TOKEN
 
-client = TelegramClient('app_v1', api_id, api_hash)
+client = TelegramClient('client', api_id, api_hash).start()
+client_bot = TelegramClient('bot', api_id, api_hash).start(bot_token=TOKEN)
 bot = telebot.TeleBot(TOKEN)
+
+
+@client_bot.on(events.NewMessage(pattern='/start'))
+async def send_welcome(event):
+    await event.respond('👋 Вітання!\n\n'
+                        'Тепер я сповіщатиму вас про повітряну тривогу, і про її відбій (наразі тільки для м. Миколаєва та Миколаївської області). Дані беруться з каналу @air_alert_ua.\n\n'
+                        'Слава Україні! 🇺🇦')
+    group_id = str(event.chat_id)
+    with open('subscribers.txt', 'r') as file_r:
+        subs = file_r.read()
+        if group_id not in subs:
+            with open('subscribers.txt', 'a') as file_a:
+                file_a.write(group_id + '\n')
 
 
 @client.on(events.NewMessage(chats='air_alert_ua'))
@@ -15,20 +29,27 @@ async def alert_handler(event):
     message = event.message.to_dict()['message']
     if '#м_Миколаїв_та_Миколаївська_територіальна_громада' in message or '#Миколаївська_область' in message:
         if '🔴' in message:
-            media = random.choice(os.listdir('media/alert_on/'))
-            if media[-3:] == 'jpg':
-                bot.send_photo(group_id, open('media/alert_on/' + media, 'rb'), caption='‍Увага! Повітряна тривога!')
-            else:
-                bot.send_video(group_id, open('media/alert_on/' + media, 'rb'), caption='‍Увага! Повітряна тривога!')
+            with open('subscribers.txt', 'r') as file:
+                for group_id in file:
+                    media = random.choice(os.listdir('media/alert_on/'))
+                    if media[-3:] == 'jpg':
+                        bot.send_photo(group_id, open('media/alert_on/' + media, 'rb'),
+                                       caption='‍Увага! Повітряна тривога!')
+                    else:
+                        bot.send_video(group_id, open('media/alert_on/' + media, 'rb'),
+                                       caption='‍Увага! Повітряна тривога!')
         elif '🟢' in message:
-            media = random.choice(os.listdir('media/alert_off/'))
-            if media[-3:] == 'jpg':
-                bot.send_photo(group_id, open('media/alert_off/' + media, 'rb'), caption='Увага! Відбій повітряної тривоги!')
-            else:
-                bot.send_video(group_id, open('media/alert_off/' + media, 'rb'), caption='Увага! Відбій повітряної тривоги!')
+            with open('subscribers.txt', 'r') as file:
+                for group_id in file:
+                    media = random.choice(os.listdir('media/alert_off/'))
+                    if media[-3:] == 'jpg':
+                        bot.send_photo(group_id, open('media/alert_off/' + media, 'rb'),
+                                       caption='Увага! Відбій повітряної тривоги!')
+                    else:
+                        bot.send_video(group_id, open('media/alert_off/' + media, 'rb'),
+                                       caption='Увага! Відбій повітряної тривоги!')
     else:
         print(f'{message[2:7]}: bot is working')
 
-client.start()
 client.run_until_disconnected()
 bot.infinity_polling()
