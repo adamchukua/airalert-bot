@@ -32,7 +32,7 @@ async def alert_handler(event):
         with open('subscribers.txt', 'r') as file:
             for group_id in file:
                 path = 'media/alert_on/' if '🔴' in message else 'media/alert_off/'
-                message = '‍Увага! Повітряна тривога!' if '🔴' in message else 'Увага! Відбій повітряної тривоги!'
+                message = '‍🚨 Увага! Повітряна тривога!' if '🔴' in message else '✅ Увага! Відбій повітряної тривоги!'
                 media = random.choice(os.listdir(path))
                 if media[-3:] == 'jpg':
                     bot.send_photo(group_id, open(path + media, 'rb'), caption=message)
