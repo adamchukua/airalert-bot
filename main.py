@@ -18,11 +18,13 @@ async def send_welcome(event):
                         ' та Миколаївської області). Дані беруться з каналу @air_alert_ua.\n\n'
                         'Слава Україні! 🇺🇦')
     group_id = str(event.chat_id)
+
     with open('subscribers.txt', 'r') as file_r:
         subs = file_r.read()
-        if group_id not in subs:
-            with open('subscribers.txt', 'a') as file_a:
-                file_a.write(group_id + '\n')
+
+    if group_id not in subs:
+        with open('subscribers.txt', 'a') as file_a:
+            file_a.write(group_id + '\n')
 
 
 @client_bot.on(events.NewMessage(pattern='/help'))
@@ -44,10 +46,12 @@ async def send_welcome(event):
 @client.on(events.NewMessage(chats='air_alert_ua'))
 async def alert_handler(event):
     message = event.message.to_dict()['message']
+    
     if '#м_Миколаїв_та_Миколаївська_територіальна_громада' in message or '#Миколаївська_область' in message:
         with open('subscribers.txt', 'r') as file:
             path = 'media/alert_on/' if '🔴' in message else 'media/alert_off/'
             message = '‍🚨 Увага! Повітряна тривога!' if '🔴' in message else '✅ Увага! Відбій повітряної тривоги!'
+            
             for group_id in file:
                 media = random.choice(os.listdir(path))
                 if media[-3:] == 'jpg':
