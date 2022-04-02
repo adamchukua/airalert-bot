@@ -45,9 +45,9 @@ async def alert_handler(event):
     message = event.message.to_dict()['message']
     if '#м_Миколаїв_та_Миколаївська_територіальна_громада' in message or '#Миколаївська_область' in message:
         with open('subscribers.txt', 'r') as file:
+            path = 'media/alert_on/' if '🔴' in message else 'media/alert_off/'
+            message = '‍🚨 Увага! Повітряна тривога!' if '🔴' in message else '✅ Увага! Відбій повітряної тривоги!'
             for group_id in file:
-                path = 'media/alert_on/' if '🔴' in message else 'media/alert_off/'
-                message = '‍🚨 Увага! Повітряна тривога!' if '🔴' in message else '✅ Увага! Відбій повітряної тривоги!'
                 media = random.choice(os.listdir(path))
                 if media[-3:] == 'jpg':
                     bot.send_photo(group_id, open(path + media, 'rb'), caption=message)
