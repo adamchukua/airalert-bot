@@ -17,6 +17,7 @@ async def send_welcome(event):
                         'Тепер я сповіщатиму вас про повітряну тривогу, і про її відбій (наразі тільки для м. Миколаєва'
                         ' та Миколаївської області). Дані беруться з каналу @air_alert_ua.\n\n'
                         'Слава Україні! 🇺🇦')
+    
     group_id = str(event.chat_id)
 
     with open('subscribers.txt', 'r') as file_r:
@@ -43,10 +44,27 @@ async def send_welcome(event):
                         '\nСлава Україні! 🇺🇦', link_preview=False)
 
 
+@client_bot.on(events.NewMessage(pattern='/stop'))
+async def send_welcome(event):
+    await event.respond('⚠️ Повідомлення вимкнені у цьому чаті!\n\n'
+                        'Ви завжди можете ввімкнути їх ввівши команду /start\n\n'
+                        'Слава Україні! 🇺🇦')
+    
+    group_id = str(event.chat_id)
+    
+    with open('subscribers.txt', 'r') as input:
+        with open('temp.txt', 'w') as output:
+            for line in input:
+                if line.strip('\n') != group_id:
+                    output.write(line)
+
+    os.replace('temp.txt', 'subscribers.txt')
+
+
 @client.on(events.NewMessage(chats='air_alert_ua'))
 async def alert_handler(event):
     message = event.message.to_dict()['message']
-    
+
     if '#м_Миколаїв_та_Миколаївська_територіальна_громада' in message or '#Миколаївська_область' in message:
         with open('subscribers.txt', 'r') as file:
             path = 'media/alert_on/' if '🔴' in message else 'media/alert_off/'
