@@ -1,7 +1,7 @@
-# myko_airalert_bot
+# airalert-bot
 ## How to get started
 Для початку використання бота потрібно:
-1) cкопіювати репозиторій https://github.com/TheGradle/myko_airalert_bot;
+1) cкопіювати репозиторій https://github.com/TheGradle/airalert-bot;
 2) встановити python3 та бібліотеки pip: telebot, telethon;
 3) cтворити файли <code>secret.py</code> та <code>subscribers.txt</code> (тут містяться chat_id користувачів та/або груп, яким відправлятимуться сповіщення, можете залишити пустим). Файл secret.py має бути вигляду:
 <pre><code>api_id = 11111111
