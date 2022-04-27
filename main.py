@@ -61,14 +61,15 @@ async def send_welcome(event):
     os.replace('temp.txt', 'subscribers.txt')
 
 
-@client.on(events.NewMessage(chats='air_alert_ua'))
+@client.on(events.NewMessage(chats='fuufuckye'))
 async def alert_handler(event):
     message = event.message.to_dict()['message']
 
     if '#м_Миколаїв_та_Миколаївська_територіальна_громада' in message or '#Миколаївська_область' in message:
         with open('subscribers.txt', 'r') as file:
             path = 'media/alert_on/' if '🔴' in message else 'media/alert_off/'
-            message = '‍🚨 Увага! Повітряна тривога!' if '🔴' in message else '✅ Увага! Відбій повітряної тривоги!'
+            place = 'м. Миколаїв' if '#м_Миколаїв_та_Миколаївська_територіальна_громада' in message else 'Миколаївська область'
+            message = f'‍🚨 {place}! Повітряна тривога!' if '🔴' in message else f'✅ {place}! Відбій повітряної тривоги!'
             
             for group_id in file:
                 media = random.choice(os.listdir(path))
