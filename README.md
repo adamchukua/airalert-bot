@@ -20,5 +20,6 @@ TOKEN = '11111111:abaBAbabab'
 <code>api_id</code> and <code>api_hash</code> you can get if create Telegram Application, https://core.telegram.org/api/obtaining_api_id<br>
 <code>TOKEN</code> is token of your bot given by @botfather (https://sendpulse.com/knowledge-base/chatbot/telegram/create-telegram-chatbot)
 8. Start the bot by following code: <code>python3 main.py</code>
+9. Authorize with your Telegram account (you must be a subscriber of https://t.me/air_alert_ua).
 
 #### "ModuleNotFoundError: No module named 'telebot'" problem solved there https://stackoverflow.com/questions/58121141/how-to-fix-importerror-no-module-named-telebot
