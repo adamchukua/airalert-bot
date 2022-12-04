@@ -6,7 +6,7 @@ You can use the following bot: https://t.me/myko_airalert_bot, or start on your 
 
 1. Download and install GIT (https://git-scm.com/downloads).
 2. Download and install Python (https://www.python.org/downloads/).
-3. Open cmd.exe with admin privileges, change directory for that one (<code>cd <path></code>), where you want to install the project, and clone this repository with next command: <code>git clone https://github.com/thegradle/airalert-bot</code>
+3. Open cmd.exe with admin privileges, change directory for that one (<code>cd [path]</code>), where you want to install the project, and clone this repository with next command: <code>git clone https://github.com/thegradle/airalert-bot</code>
 4. Type in command line: <code>cd airalert-bot</code>
 5. Install pyTelegramBotAPI with next command: <code>pip3 install pyTelegramBotAPI</code>
 6. Install Telethon with next command: <code>pip3 install telethon</code>
