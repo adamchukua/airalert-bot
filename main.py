@@ -61,7 +61,7 @@ async def send_welcome(event):
     os.replace('temp.txt', 'subscribers.txt')
 
 
-@client.on(events.NewMessage(chats='fuufuckye'))
+@client.on(events.NewMessage(chats='air_alert_ua')) # type a channel with air alerts
 async def alert_handler(event):
     message = event.message.to_dict()['message']
 
