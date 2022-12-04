@@ -1,6 +1,8 @@
 # airalert-bot
 
-## How to get started
+## How to run 
+
+### Windows
 
 You can use the following bot: https://t.me/myko_airalert_bot, or start on your machine:
 
